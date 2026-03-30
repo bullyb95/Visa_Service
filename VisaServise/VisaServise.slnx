@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/Visa_Servise/">
+    <Project Path="Domain.ValueObject/Domain.ValueObject.csproj" Id="10b7cf20-cb10-4a6f-90fe-d726beee6725" />
+    <Project Path="Domain.Visa_Servise/Domain.Visa_Servise.csproj" Id="64ef4652-12c8-4842-aaae-52d95230a408" />
+  </Folder>
+  <Project Path="VisaServise/VisaServise.csproj" />
+</Solution>
