@@ -6,7 +6,7 @@ namespace Domain.Visa_Servise;
 
 public class Officer : Entity<Guid>
 {
-    public PersonName Name { get; private set; }
+    public PersonName Nam { get; private set; }
     public OfficerPosition Position { get; private set; }
 
     private readonly List<VisaApplication> _processedApplications = new();
