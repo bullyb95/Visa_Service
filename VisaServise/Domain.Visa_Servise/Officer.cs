@@ -6,13 +6,13 @@ namespace Domain.Visa_Servise;
 
 public class Officer : Entity<Guid>
 {
-    public PersonName Nam { get; private set; }
+    public PersonName Name { get; private set; }
     public OfficerPosition Position { get; private set; }
 
     private readonly List<VisaApplication> _processedApplications = new();
     public IReadOnlyCollection<VisaApplication> ProcessedApplications => _processedApplications.AsReadOnly();
 
-    protected Officer() { }
+    protected Officer() : base(Guid.NewGuid()) { }
 
     public Officer(Guid id, PersonName name, OfficerPosition position) : base(id)
     {
@@ -31,6 +31,10 @@ public class Officer : Entity<Guid>
     public void AssignToApplication(VisaApplication application)
     {
         if (application.Officer == this) return;
+
+        if (application.Officer != null && application.Officer != this)
+            throw new AnotherOfficerEditApplicationException(this.Id.ToString(), application.Id.ToString(), application.Officer.Id.ToString());
+
         application.SetOfficer(this);
         if (!_processedApplications.Contains(application))
             _processedApplications.Add(application);

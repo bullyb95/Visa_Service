@@ -1,10 +1,8 @@
-﻿using Domain.Visa_Servise;
+﻿namespace Domain.ValueObject.Exceptions;
 
-namespace Domain.ValueObject.Exceptions;
-
-public class ApplicationNotBelongApplicantException(VisaApplication application, Applicant applicant)
-    : InvalidOperationException($"Application {application.Id} does not belong to applicant {applicant.Id}")
+public class ApplicationNotBelongApplicantException(string applicationId, string applicantId)
+    : InvalidOperationException($"Application {applicationId} does not belong to applicant {applicantId}")
 {
-    public VisaApplication Application => application;
-    public Applicant Applicant => applicant;
+    public string ApplicationId => applicationId;
+    public string ApplicantId => applicantId;
 }

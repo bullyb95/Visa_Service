@@ -12,7 +12,7 @@ public class Applicant : Entity<Guid>
     private readonly List<VisaApplication> _applications = new();
     public IReadOnlyCollection<VisaApplication> Applications => _applications.AsReadOnly();
 
-    protected Applicant() { }
+    protected Applicant() : base(Guid.NewGuid()) { }
 
     public Applicant(Guid id, PersonName name, ContactInfo? contact = null) : base(id)
     {
@@ -29,12 +29,11 @@ public class Applicant : Entity<Guid>
 
     public bool EditApplication(VisaApplication application, Officer? newOfficer = null, ApplicationStatus? newStatus = null)
     {
-        if (application.Applicant != this)
-            throw new ApplicationNotBelongApplicantException(application, this);
         if (!_applications.Contains(application))
-            throw new ApplicationNotBelongApplicantException(application, this);
+            throw new ApplicationNotBelongApplicantException(application.Id.ToString(), Id.ToString());
 
         bool changed = false;
+
         if (newOfficer != null && application.Officer != newOfficer)
         {
             application.SetOfficer(newOfficer);
@@ -50,10 +49,8 @@ public class Applicant : Entity<Guid>
 
     public bool DeleteApplication(VisaApplication application)
     {
-        if (application.Applicant != this)
-            throw new ApplicationNotBelongApplicantException(application, this);
         if (!_applications.Contains(application))
-            throw new ApplicationNotBelongApplicantException(application, this);
+            throw new ApplicationNotBelongApplicantException(application.Id.ToString(), Id.ToString());
         return _applications.Remove(application);
     }
 }

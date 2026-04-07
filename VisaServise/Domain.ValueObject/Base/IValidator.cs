@@ -1,6 +1,6 @@
 ﻿namespace Domain.ValueObject.Base;
 
-public interface IValidator<in T>
+public interface IValidator<T>
 {
     void Validate(T value);
 }

@@ -3,19 +3,17 @@ using Domain.ValueObject.Validators;
 
 namespace Domain.ValueObject;
 
-public class ContactInfo : ValueObject<ContactInfo>
+public class Email(string value) : ValueObject<string>(new EmailValidator(), value);
+public class Phone(string value) : ValueObject<string>(new PhoneValidator(), value);
+
+public class ContactInfo
 {
-    public string? Email { get; }
-    public string? Phone { get; }
-    public string? Address { get; }
+    public Email Email { get; }
+    public Phone Phone { get; }
 
-    public ContactInfo(string? email = null, string? phone = null, string? address = null)
-        : base(new ContactInfoValidator(), new ContactInfoValue(email, phone, address))
+    public ContactInfo(string email, string phone)
     {
-        Email = email;
-        Phone = phone;
-        Address = address;
+        Email = new Email(email);
+        Phone = new Phone(phone);
     }
-
-    private record ContactInfoValue(string? Email, string? Phone, string? Address);
 }

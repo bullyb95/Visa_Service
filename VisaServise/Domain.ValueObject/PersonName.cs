@@ -3,19 +3,17 @@ using Domain.ValueObject.Validators;
 
 namespace Domain.ValueObject;
 
-public class PersonName : ValueObject<PersonName>
+public class FirstName(string value) : ValueObject<string>(new PersonNameValidator(), value);
+public class LastName(string value) : ValueObject<string>(new PersonNameValidator(), value);
+
+public class PersonName
 {
-    public string LastName { get; }
-    public string FirstName { get; }
-    public string? MiddleName { get; }
+    public FirstName FirstName { get; }
+    public LastName LastName { get; }
 
-    public PersonName(string lastName, string firstName, string? middleName = null)
-        : base(new PersonNameValidator(), new PersonNameValue(lastName, firstName, middleName))
+    public PersonName(string firstName, string lastName)
     {
-        LastName = lastName;
-        FirstName = firstName;
-        MiddleName = middleName;
+        FirstName = new FirstName(firstName);
+        LastName = new LastName(lastName);
     }
-
-    private record PersonNameValue(string LastName, string FirstName, string? MiddleName);
 }
