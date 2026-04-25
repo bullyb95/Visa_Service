@@ -9,9 +9,9 @@ var middleName = new MiddleName("Сергеевич");
 Console.WriteLine($"ФИО: {lastName} {firstName} {middleName}");
 
 var email = new Email("ivan.petrov@mail.ru");
-var phone = new Phone("+79991234567");
-Console.WriteLine($"Контакты: {email}, {phone}");
-
+var phone = new Phone("+79991234567"); 
+Console.WriteLine($"Контакты: {email}, {phone}"); 
+ 
 var appNumber = new ApplicationNumber("VISA-2025-001");
 Console.WriteLine($"Номер заявки: {appNumber}");
 
@@ -20,7 +20,7 @@ Console.WriteLine($"Должность: {position}");
 
 Console.WriteLine();
 Console.WriteLine("Entities:");
-
+ 
 var contactInfo = new ContactInfo("ivan.petrov@mail.ru", "+79991234567");
 var applicant = new Applicant(
     Guid.NewGuid(),

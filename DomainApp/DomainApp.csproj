@@ -10,6 +10,6 @@
   <ItemGroup>
     <ProjectReference Include="..\VisaService\Domain\VisaService.Domain\VisaService.Domain.csproj" />
     <ProjectReference Include="..\VisaService\Domain\VisaService.ValueObjects\VisaService.ValueObjects.csproj" />
-  </ItemGroup>
+  </ItemGroup> 
 
-</Project>
+</Project>  
