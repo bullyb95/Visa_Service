@@ -16,7 +16,7 @@ var appNumber = new ApplicationNumber("VISA-2025-001");
 Console.WriteLine($"Номер заявки: {appNumber}");
 
 var position = new OfficerPosition("Старший визовый офицер");
-Console.WriteLine($"Должность: {position}");
+Console.WriteLine($"Должность: {position}"); 
 
 Console.WriteLine();
 Console.WriteLine("Entities:");
