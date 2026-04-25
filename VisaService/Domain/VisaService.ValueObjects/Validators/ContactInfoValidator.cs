@@ -20,7 +20,7 @@ public class EmailValidator : IValidator<string>
 
 public class PhoneValidator : IValidator<string>
 {
-    private const int MinLength = 7;
+    private const int MinLength = 7;  
     private const int MaxLength = 20;
 
     public void Validate(string value)

@@ -12,7 +12,7 @@ public class VisaApplication : Entity<Guid>
 
     
     public bool FormFilled { get; private set; }
-    public bool DocumentsChecked { get; private set; }
+    public bool DocumentsChecked { get; private set; } 
     public bool ResultChecked { get; private set; }
 
     protected VisaApplication() : base()

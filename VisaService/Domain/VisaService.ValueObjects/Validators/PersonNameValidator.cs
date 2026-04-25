@@ -19,3 +19,4 @@ public class PersonNameValidator : IValidator<string>
             throw new ArgumentLongValueException(nameof(value), value, MaxLength);
     }
 }
+ 

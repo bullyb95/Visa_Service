@@ -18,3 +18,4 @@ public class ApplicationNumberValidator : IValidator<string>
             throw new ArgumentLongValueException(nameof(value), value, MaxLength);
     }
 }
+ 

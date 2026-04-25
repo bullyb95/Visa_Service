@@ -8,7 +8,7 @@ public class Applicant : Entity<Guid>
 {
     public LastName LastName { get; private set; }
     public FirstName FirstName { get; private set; }
-    public MiddleName MiddleName { get; private set; }
+    public MiddleName MiddleName { get; private set; } 
     public ContactInfo ContactInfo { get; private set; }
 
     private readonly List<VisaApplication> _applications = new();

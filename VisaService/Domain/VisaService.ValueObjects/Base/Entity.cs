@@ -11,7 +11,7 @@ public abstract class Entity<TId> where TId : notnull
 
     protected Entity()
     {
-        Id = default!;
+        Id = default!; 
     }
 
     public override bool Equals(object? obj)

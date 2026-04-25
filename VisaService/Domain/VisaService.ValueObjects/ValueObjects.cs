@@ -20,6 +20,6 @@ public class OfficerPosition(string value)
 
 public class Email(string value)
     : ValueObject<string>(new EmailValidator(), value);
-
+ 
 public class Phone(string value)
     : ValueObject<string>(new PhoneValidator(), value);

@@ -9,7 +9,7 @@ public class Officer : Entity<Guid>
     public LastName LastName { get; private set; }
     public FirstName FirstName { get; private set; }
     public MiddleName MiddleName { get; private set; }
-    public OfficerPosition Position { get; private set; } 
+    public OfficerPosition Position { get; private set; }  
 
     protected Officer() : base()
     {

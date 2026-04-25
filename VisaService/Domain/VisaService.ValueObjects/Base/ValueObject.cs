@@ -17,7 +17,7 @@ public abstract class ValueObject<T> : IEquatable<ValueObject<T>>
     public override string ToString()
         => Value!.ToString() ?? GetType().ToString();
 
-    public override int GetHashCode()
+    public override int GetHashCode() 
         => Value!.GetHashCode();
 
     public override bool Equals(object? other)

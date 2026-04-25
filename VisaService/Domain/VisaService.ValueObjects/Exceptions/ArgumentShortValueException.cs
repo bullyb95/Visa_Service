@@ -6,3 +6,4 @@ public class ArgumentShortValueException(string paramName, string value, int min
     public string Value => value;
     public int MinLength => minLength;
 }
+ 

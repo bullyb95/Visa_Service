@@ -15,3 +15,4 @@ public class ContactInfo
 
     protected ContactInfo() { Email = default!; Phone = default!; }
 }
+ 
