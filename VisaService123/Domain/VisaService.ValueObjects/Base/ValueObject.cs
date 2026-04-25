@@ -5,7 +5,7 @@ namespace VisaService.ValueObjects.Base;
 public abstract class ValueObject<T> : IEquatable<ValueObject<T>>
 {
     public T Value { get; }
-
+     
     protected ValueObject(IValidator<T> validator, T value)
     {
         if (validator == null)

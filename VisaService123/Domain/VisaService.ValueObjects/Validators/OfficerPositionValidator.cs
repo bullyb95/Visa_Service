@@ -3,8 +3,7 @@ using VisaService.ValueObjects.Exceptions;
 
 namespace VisaService.ValueObjects.Validators;
 
-// используется для имени, фамилии и отчества
-public class PersonNameValidator : IValidator<string>
+public class OfficerPositionValidator : IValidator<string>
 {
     private const int MinLength = 2;
     private const int MaxLength = 100;

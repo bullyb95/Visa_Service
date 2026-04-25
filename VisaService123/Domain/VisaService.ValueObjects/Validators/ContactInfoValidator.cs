@@ -14,7 +14,7 @@ public class EmailValidator : IValidator<string>
         if (value.Length > MaxLength)
             throw new ArgumentLongValueException(nameof(value), value, MaxLength);
         if (!value.Contains('@') || !value.Contains('.'))
-            throw new FormatException($"Значение \"{value}\" не является корректным email адресом.");
+            throw new FormatException($"Значение \"{value}\" не является корректным email адресом");
     }
 }
 

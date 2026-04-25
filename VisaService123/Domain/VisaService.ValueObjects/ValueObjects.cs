@@ -15,6 +15,9 @@ public class MiddleName(string value)
 public class ApplicationNumber(string value)
     : ValueObject<string>(new ApplicationNumberValidator(), value);
 
+public class OfficerPosition(string value)
+    : ValueObject<string>(new OfficerPositionValidator(), value);
+
 public class Email(string value)
     : ValueObject<string>(new EmailValidator(), value);
 
