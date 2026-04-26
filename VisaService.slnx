@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="DomainApp/DomainApp.csproj" />
+  <Project Path="VisaService/Domain/VisaService.ValueObjects/VisaService.ValueObjects.csproj" />
+  <Project Path="VisaService/Domain/VisaService.Domain/VisaService.Domain.csproj" />
+</Solution>
