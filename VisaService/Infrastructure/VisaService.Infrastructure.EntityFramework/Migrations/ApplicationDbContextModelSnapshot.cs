@@ -103,10 +103,15 @@ namespace VisaService.Infrastructure.EntityFramework.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("form_filled");
 
+                    b.Property<bool?>("IsVisaIssued")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_visa_issued");
+
                     b.Property<string>("Number")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("number");
 
                     b.Property<bool>("ResultChecked")
                         .HasColumnType("boolean")
@@ -120,11 +125,45 @@ namespace VisaService.Infrastructure.EntityFramework.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Number")
+                        .IsUnique();
+
                     b.HasIndex("applicant_id");
 
                     b.HasIndex("officer_id");
 
                     b.ToTable("visa_application", (string)null);
+                });
+
+            modelBuilder.Entity("VisaService.Domain.Entities.Applicant", b =>
+                {
+                    b.OwnsOne("VisaService.ValueObjects.ContactInfo", "ContactInfo", b1 =>
+                        {
+                            b1.Property<Guid>("ApplicantId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Email")
+                                .IsRequired()
+                                .HasMaxLength(254)
+                                .HasColumnType("character varying(254)")
+                                .HasColumnName("email");
+
+                            b1.Property<string>("Phone")
+                                .IsRequired()
+                                .HasMaxLength(20)
+                                .HasColumnType("character varying(20)")
+                                .HasColumnName("phone");
+
+                            b1.HasKey("ApplicantId");
+
+                            b1.ToTable("applicants");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ApplicantId");
+                        });
+
+                    b.Navigation("ContactInfo")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("VisaService.Domain.Entities.VisaApplication", b =>
@@ -137,7 +176,8 @@ namespace VisaService.Infrastructure.EntityFramework.Migrations
 
                     b.HasOne("VisaService.Domain.Entities.Officer", "AssignedOfficer")
                         .WithMany()
-                        .HasForeignKey("officer_id");
+                        .HasForeignKey("officer_id")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Applicant");
 
