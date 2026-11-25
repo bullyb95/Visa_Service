@@ -5,7 +5,7 @@ namespace VisaService.ValueObjects.Base;
 public abstract class ValueObject<T> : IEquatable<ValueObject<T>>
 {
     public T Value { get; }
-     
+
     protected ValueObject(IValidator<T> validator, T value)
     {
         if (validator == null)
@@ -17,7 +17,7 @@ public abstract class ValueObject<T> : IEquatable<ValueObject<T>>
     public override string ToString()
         => Value!.ToString() ?? GetType().ToString();
 
-    public override int GetHashCode() 
+    public override int GetHashCode()
         => Value!.GetHashCode();
 
     public override bool Equals(object? other)
@@ -25,12 +25,9 @@ public abstract class ValueObject<T> : IEquatable<ValueObject<T>>
 
     public bool Equals(ValueObject<T>? other)
     {
-        if (other is null)
-            return false;
-        if (ReferenceEquals(this, other))
-            return true;
-        if (GetType() != other.GetType())
-            return false;
+        if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
+        if (GetType() != other.GetType()) return false;
         return other.Value!.Equals(Value);
     }
 

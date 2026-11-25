@@ -2,7 +2,7 @@ using VisaService.ValueObjects;
 using VisaService.ValueObjects.Base;
 using VisaService.Domain.Exceptions;
 
-namespace VisaService.Domain;
+namespace VisaService.Domain.Entities;
 
 public class VisaApplication : Entity<Guid>
 {
@@ -10,28 +10,28 @@ public class VisaApplication : Entity<Guid>
     public Applicant Applicant { get; private set; }
     public Officer? AssignedOfficer { get; private set; }
 
-    
     public bool FormFilled { get; private set; }
-    public bool DocumentsChecked { get; private set; } 
+    public bool DocumentsChecked { get; private set; }
     public bool ResultChecked { get; private set; }
+    public bool? IsVisaIssued { get; private set; }
 
-    protected VisaApplication() : base()
-    {
-        Number = default!;
-        Applicant = default!;
-    }
+    protected VisaApplication() : base() { }
 
-    public VisaApplication(Guid id, ApplicationNumber number, Applicant applicant)
+    public VisaApplication(
+        ApplicationNumber number,
+        Applicant applicant)
+        : this(Guid.NewGuid(), number, applicant) { }
+
+    protected VisaApplication(
+        Guid id,
+        ApplicationNumber number,
+        Applicant applicant)
         : base(id)
     {
         Number = number ?? throw new ArgumentNullValueException(nameof(number));
         Applicant = applicant ?? throw new ArgumentNullValueException(nameof(applicant));
-        FormFilled = false;
-        DocumentsChecked = false;
-        ResultChecked = false;
     }
 
-    
     public void FillForm()
     {
         if (FormFilled)
@@ -39,16 +39,12 @@ public class VisaApplication : Entity<Guid>
         FormFilled = true;
     }
 
-    
     public void SubmitDocuments()
     {
         if (!FormFilled)
             throw new InvalidApplicationStateException(this, nameof(SubmitDocuments));
-        if (DocumentsChecked)
-            throw new InvalidApplicationStateException(this, nameof(SubmitDocuments));
     }
 
-    
     public void AcceptApplication(Officer officer)
     {
         if (officer == null) throw new ArgumentNullValueException(nameof(officer));
@@ -57,7 +53,6 @@ public class VisaApplication : Entity<Guid>
         AssignedOfficer = officer;
     }
 
-    
     public void VerifyData(Officer officer)
     {
         if (officer == null) throw new ArgumentNullValueException(nameof(officer));
@@ -66,15 +61,17 @@ public class VisaApplication : Entity<Guid>
         DocumentsChecked = true;
     }
 
-    
     public void IssueVisa(Officer officer)
     {
         if (officer == null) throw new ArgumentNullValueException(nameof(officer));
         if (!DocumentsChecked)
             throw new InvalidApplicationStateException(this, nameof(IssueVisa));
+        if (ResultChecked)
+            throw new InvalidApplicationStateException(this, nameof(IssueVisa));
         if (AssignedOfficer != officer)
             throw new AnotherOfficerEditApplicationException(this, officer);
         ResultChecked = true;
+        IsVisaIssued = true;
     }
 
     public void RejectVisa(Officer officer)
@@ -82,16 +79,20 @@ public class VisaApplication : Entity<Guid>
         if (officer == null) throw new ArgumentNullValueException(nameof(officer));
         if (!DocumentsChecked)
             throw new InvalidApplicationStateException(this, nameof(RejectVisa));
+        if (ResultChecked)
+            throw new InvalidApplicationStateException(this, nameof(RejectVisa));
         if (AssignedOfficer != officer)
             throw new AnotherOfficerEditApplicationException(this, officer);
         ResultChecked = true;
+        IsVisaIssued = false;
     }
 
-    
-    public string GetResult() 
+    public string GetResult()
     {
         if (!ResultChecked)
             return $"Заявка {Number}: ещё рассматривается";
-        return $"Заявка {Number}: решение принято";
+        return IsVisaIssued == true
+            ? $"Заявка {Number}: виза выдана"
+            : $"Заявка {Number}: в выдаче визы отказано";
     }
 }
