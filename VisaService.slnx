@@ -12,5 +12,8 @@
     <Project Path="VisaService/Infrastructure/VisaService.Infrastructure.EntityFramework/VisaService.Infrastructure.EntityFramework.csproj" />
     <Project Path="VisaService/Infrastructure/Repositories.Implementations/VisaService.Infrastructure.Repositories.Implementations.csproj" />
   </Folder>
+  <Folder Name="/Presentation/">
+    <Project Path="VisaService/Presentation/VisaService.WebHost/VisaService.WebHost.csproj" />
+  </Folder>
   <Project Path="DomainApp/DomainApp.csproj" />
 </Solution>
