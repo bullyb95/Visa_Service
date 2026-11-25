@@ -1,0 +1,75 @@
+@host = http://localhost:5233
+
+### 1. Создать заявителя
+POST {{host}}/api/v1/Applicants
+Content-Type: application/json
+
+{
+  "lastName": "Петров",
+  "firstName": "Иван",
+  "middleName": "Сергеевич",
+  "email": "ivan.petrov@mail.ru",
+  "phone": "+79991234567"
+}
+
+### 2. Создать офицера
+POST {{host}}/api/v1/Officers
+Content-Type: application/json
+
+{
+  "lastName": "Сидоров",
+  "firstName": "Алексей",
+  "middleName": "Петрович",
+  "position": "Старший визовый офицер"
+}
+
+### Подставь id из ответов выше
+@applicantId = 00000000-0000-0000-0000-000000000000
+@officerId = 00000000-0000-0000-0000-000000000000
+
+### 3. Создать заявку
+POST {{host}}/api/v1/VisaApplications
+Content-Type: application/json
+
+{
+  "applicantId": "{{applicantId}}",
+  "number": "VISA-2026-001"
+}
+
+@applicationId = 00000000-0000-0000-0000-000000000000
+
+### 4. Заполнить анкету
+POST {{host}}/api/v1/VisaApplications/fill-form
+Content-Type: application/json
+
+{ "applicantId": "{{applicantId}}", "applicationId": "{{applicationId}}" }
+
+### 5. Подать документы
+POST {{host}}/api/v1/VisaApplications/submit-documents
+Content-Type: application/json
+
+{ "applicantId": "{{applicantId}}", "applicationId": "{{applicationId}}" }
+
+### 6. Офицер принимает заявку
+POST {{host}}/api/v1/VisaApplications/accept
+Content-Type: application/json
+
+{ "officerId": "{{officerId}}", "applicationId": "{{applicationId}}" }
+
+### 7. Офицер проверяет данные
+POST {{host}}/api/v1/VisaApplications/verify
+Content-Type: application/json
+
+{ "officerId": "{{officerId}}", "applicationId": "{{applicationId}}" }
+
+### 8. Офицер выдаёт визу (или /reject)
+POST {{host}}/api/v1/VisaApplications/issue
+Content-Type: application/json
+
+{ "officerId": "{{officerId}}", "applicationId": "{{applicationId}}" }
+
+### 9. Заявитель получает результат
+GET {{host}}/api/v1/VisaApplications/{{applicationId}}/result?applicantId={{applicantId}}
+
+### Проверка здоровья сервиса и БД
+GET {{host}}/health
