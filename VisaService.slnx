@@ -8,5 +8,9 @@
     <Project Path="VisaService/Application/VisaService.Application.Models/VisaService.Application.Models.csproj" />
     <Project Path="VisaService/Application/VisaService.Application.Services/VisaService.Application.Services.csproj" />
   </Folder>
+  <Folder Name="/Infrastructure/">
+    <Project Path="VisaService/Infrastructure/VisaService.Infrastructure.EntityFramework/VisaService.Infrastructure.EntityFramework.csproj" />
+    <Project Path="VisaService/Infrastructure/Repositories.Implementations/VisaService.Infrastructure.Repositories.Implementations.csproj" />
+  </Folder>
   <Project Path="DomainApp/DomainApp.csproj" />
 </Solution>
