@@ -1,5 +1,5 @@
-
 using VisaService.Domain;
+using VisaService.Domain.Entities;
 using VisaService.Domain.Exceptions;
 using VisaService.ValueObjects;
 
@@ -10,21 +10,20 @@ var middleName = new MiddleName("Сергеевич");
 Console.WriteLine($"ФИО: {lastName} {firstName} {middleName}");
 
 var email = new Email("ivan.petrov@mail.ru");
-var phone = new Phone("+79991234567"); 
-Console.WriteLine($"Контакты: {email}, {phone}"); 
- 
+var phone = new Phone("+79991234567");
+Console.WriteLine($"Контакты: {email}, {phone}");
+
 var appNumber = new ApplicationNumber("VISA-2025-001");
 Console.WriteLine($"Номер заявки: {appNumber}");
 
 var position = new OfficerPosition("Старший визовый офицер");
-Console.WriteLine($"Должность: {position}"); 
+Console.WriteLine($"Должность: {position}");
 
 Console.WriteLine();
 Console.WriteLine("Entities:");
- 
+
 var contactInfo = new ContactInfo("ivan.petrov@mail.ru", "+79991234567");
 var applicant = new Applicant(
-    Guid.NewGuid(),
     new LastName("Петров"),
     new FirstName("Иван"),
     new MiddleName("Сергеевич"),
@@ -32,7 +31,6 @@ var applicant = new Applicant(
 Console.WriteLine($"Заявитель: {applicant}, id = {applicant.Id}");
 
 var officer = new Officer(
-    Guid.NewGuid(),
     new LastName("Сидоров"),
     new FirstName("Алексей"),
     new MiddleName("Петрович"),
@@ -45,29 +43,36 @@ Console.WriteLine("Бизнес-логика:");
 var application = applicant.CreateApplication(new ApplicationNumber("VISA-2025-001"));
 Console.WriteLine($"Заявка создана: {application.Number}");
 
-application.FillForm();
+// Applicant: Fill out form
+applicant.FillForm(application);
 Console.WriteLine($"Форма заполнена: {application.FormFilled}");
 
-application.SubmitDocuments();
+// Applicant: Submit documents
+applicant.SubmitDocuments(application);
 Console.WriteLine("Документы поданы");
 
-application.AcceptApplication(officer);
+// Officer: Accept application
+officer.AcceptApplication(application);
 Console.WriteLine($"Заявка принята офицером {officer}");
 
-application.VerifyData(officer);
+// Officer: Verify data
+officer.VerifyData(application);
 Console.WriteLine($"Данные проверены: {application.DocumentsChecked}");
 
-application.IssueVisa(officer);
+// Officer: Issue visa
+officer.IssueVisa(application);
 Console.WriteLine($"Виза выдана: {application.ResultChecked}");
 
-Console.WriteLine($"Результат: {application.GetResult()}");
+// Applicant: Receive result
+var result = applicant.ReceiveResult(application);
+Console.WriteLine($"Результат для заявителя: {result}");
 
 Console.WriteLine();
 Console.WriteLine("Проверка исключений:");
 
 try
 {
-    application.FillForm();
+    applicant.FillForm(application);
 }
 catch (InvalidApplicationStateException ex)
 {
@@ -77,16 +82,15 @@ catch (InvalidApplicationStateException ex)
 try
 {
     var officer2 = new Officer(
-        Guid.NewGuid(),
         new LastName("Козлов"),
         new FirstName("Дмитрий"),
         new MiddleName("Иванович"),
         new OfficerPosition("Визовый офицер"));
     var app2 = applicant.CreateApplication(new ApplicationNumber("VISA-2025-002"));
-    app2.FillForm();
-    app2.SubmitDocuments();
-    app2.AcceptApplication(officer);
-    app2.VerifyData(officer2);
+    applicant.FillForm(app2);
+    applicant.SubmitDocuments(app2);
+    officer.AcceptApplication(app2);
+    officer2.VerifyData(app2);
 }
 catch (AnotherOfficerEditApplicationException ex)
 {
